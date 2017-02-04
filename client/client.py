@@ -5,13 +5,16 @@ Created on 25.01.2017
 '''
 import time
 import sys
+import os
 
 from tornado import websocket, ioloop, web, gen
 from datetime import timedelta
 
+dirname, filename = os.path.split(os.path.abspath(__file__))
+
 cl = []
 i = 0;
-public_path = '/home/pi/termometr/frontend/termometr/dist/'
+public_path = dirname + '/../frontend/termometr/dist/'
 
 class MainHandler(web.RequestHandler):
     def get(self):
