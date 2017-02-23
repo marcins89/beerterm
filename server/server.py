@@ -26,6 +26,7 @@ class OutSocketHandler(websocket.WebSocketHandler):
         return True
 
     def open(self):
+	print self
         if self not in cl_out:
             cl_out.append(self)
         self.write_message(u"OK")
@@ -42,17 +43,19 @@ class InSocketHandler(websocket.WebSocketHandler):
         return True
 
     def open(self):
+	print self
         if self not in cl_in:
             cl_in.append(self)
         self.write_message(u"OK")
 
     def on_close(self):
         if self in cl_in:
-            cl.remove(self)
+            cl_in.remove(self)
         
     def on_message(self, message):
+	print message
         for client in cl_out:
-            client.write_message("%.2f C \r" % (temp))
+            client.write_message(message)
         self.write_message("OK!")
 
 app = web.Application([
